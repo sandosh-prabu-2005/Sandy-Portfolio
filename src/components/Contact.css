@@ -1,0 +1,217 @@
+
+/* Base styles */
+.contact-page {
+    padding: 2rem;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(49, 0, 79, 0.263), rgba(29, 0, 52, 0.992));
+    color: #fff;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.contact-heading {
+    font-size: 2.5rem;
+    background: linear-gradient(90deg, #f6d365, #fda085); /* Updated gradient */
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+.contact-subheading {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Flexbox Container for Form and Info */
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Contact Form */
+.contact-form {
+    flex: 1;
+    max-width: 600px;
+    padding: 2rem;
+    background: rgba(26, 26, 26, 0.7); /* Semi-transparent background */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    /* Apply blur effect to the background only */
+    backdrop-filter: blur(5px); /* Adjust for desired blur intensity */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.form-group input, .form-group select {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: 2px solid #8a2be2;
+}
+
+/* Contact Form Button */
+button.submit-button {
+    grid-column: span 2;
+    padding: 0.8rem;
+    background: linear-gradient(90deg, #f6d465aa, #fd9f85a3);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    transform: scale(1); /* Default scale */
+}
+/* Contact Information */
+.contact-info {
+    flex: 1;
+    max-width: 400px;
+    padding: 2rem;
+    text-align: center; /* Align content in the center */
+    box-shadow: none; /* Remove background and shadow */
+    background: none; /* Ensure no background */
+    margin: 0 auto; /* Center the contact-info div horizontally */
+}
+
+.contact-info h2 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #f6d365, #fda085); /* Gradient for text */
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.contact-info a {
+    color: #d4a1ff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Hover Effect */
+button.submit-button:hover {
+    transform: scale(1.04); /* Slightly scale up on hover */
+    background: linear-gradient(90deg, #f6d365, #fda085);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+/* Active State */
+button.submit-button:active {
+    transform: scale(1); /* Return to original size */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on active */
+    background: linear-gradient(90deg, #8a2be2, #9b67e5); /* Darker violet gradient on active */
+}
+
+/* Focus Effect */
+button.submit-button:focus {
+    outline: none; /* Remove default outline */
+    border: 2px solid #8a2be2; /* Add custom border on focus */
+}
+
+
+/* Contact Information */
+.contact-info {
+    flex: 1;
+    max-width: 400px;
+    padding: 2rem;
+    background: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.contact-info h2 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #f6d365, #fda085); /* Updated gradient */
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.contact-info a {
+    color: #d4a1ff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Smooth Transition for Enter/Exit */
+.contact-transition-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.contact-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.contact-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-transition-exit-active {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+
+    .contact-form, .contact-info {
+        max-width: 100%;
+    }
+
+    .contact-form {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-heading,
+    .contact-subheading,
+    .submit-button {
+        grid-column: span 1;
+    }
+}

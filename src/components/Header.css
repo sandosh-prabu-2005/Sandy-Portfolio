@@ -1,0 +1,282 @@
+/* General Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly */
+    align-items: center; /* Vertically center elements */
+    padding: 1rem 2rem;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(49, 0, 79, 0.263), rgba(29, 0, 52, 0.992)); /* Subtle dark violet gradient */
+    color: white;
+    height: 90px;
+    font-size: 1.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support for blur effect */
+    transition: background-color 0.5s ease-in-out; /* Smooth transition for hover or other changes */
+    width: 100%; /* Ensure the header takes full width */
+}
+
+
+/* Center the logo, email, and nav */
+.header .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1; /* Takes up remaining space */
+}
+
+.header .email {
+    flex: 1;
+    text-align: center; /* Center email text */
+    margin: 0;
+}
+
+.header nav {
+    flex: 3.8; /* Gives more space to navigation items */
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers navigation items */
+    padding: 0;
+    margin: 0;
+    gap: 2rem; /* Adds gap between list items */
+}
+
+nav ul li {
+    font-size: large;
+    text-align: center;
+}
+
+/* Anchor tag styles */
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    display: inline-block;
+    background: linear-gradient(90deg, #f6d365, #fda085);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    font-size: 1.3rem;  /* Increased font size */
+    font-weight: bold;
+}
+/* Button Styles */
+button {
+    background-image: linear-gradient(90deg, #f6d365, #fda085); /* Initial gradient from left to right */
+    color: red;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 50px; /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Smooth transition for background and other properties */
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    overflow: hidden; /* Ensures the shine effect doesn't overflow the button */
+}
+
+/* Shine effect (on hover) */
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; /* Start from the left side */
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4); /* Light white shine color */
+    transition: left 0.4s ease-in-out; /* Smooth transition for shine movement */
+}
+
+/* Hover effect for the button */
+button:hover::before {
+    left: 100%; /* Move the shine from left to right */
+}
+
+button:hover {
+    background-image: linear-gradient(90deg, #f6d365, #fda085); /* Optional, ensure gradient stays */
+    box-shadow: 0px 4px 15px rgba(255, 140, 0, 0.8); /* Soft shadow effect on hover */
+}
+
+/* Focus effect for accessibility */
+button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0px 0px 10px rgba(255, 140, 0, 0.8); /* Glow effect on focus */
+}
+
+/* Styling for any links inside the button */
+button a {
+    color: black;
+    text-decoration: none;
+    display: block; /* Ensure the link inside the button takes up the full width */
+}
+
+/* Prevent logo and title from spreading too much */
+.header > * {
+    text-align: center; /* Centers the text horizontally */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logo adjustments with transition effect */
+.logo {
+    width: 115px; /* Adjust logo size */
+    height: 90px;
+    padding: 3px;
+    transform: scale(1); /* Initial logo scale */
+    transition: transform 1s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions for scale and shadow */
+}
+
+/* Hover effect for logo */
+.logo:hover {
+    animation: infiniteRotation 2s linear infinite; /* Infinite rotation */
+    transform: scale(1.1); /* Slightly enlarge logo */
+}
+
+/* Style for email */
+.email {
+    margin: 0;
+    font-size: 1.1rem; /* Slightly larger font for better readability */
+    font-weight: bold;
+    background: linear-gradient(90deg, #f6d365, #fda085);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4);
+    display: inline-block;
+    padding: 0.4rem 0.8rem; /* Adjusted padding for better spacing */
+    border: 2px solid transparent; /* Base border */
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: none; /* Remove initial box-shadow */
+}
+
+/* Hover effect for email */
+.email:hover {
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: scale(1.1); /* Slight enlargement on hover */
+    border-color: transparent; /* Keeps border consistent */
+    box-shadow: 0px 0px 20px rgba(132, 0, 255, 0.6), 0px 0px 15px rgba(138, 43, 226, 0.5); /* Soft violet glow */
+}
+
+/* Pseudo-element for underline effect */
+nav ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    /* Slightly below the text */
+    width: 0;
+    height: 3.5px;
+    background: linear-gradient(90deg,  #000000, #ff4500, #f6d365);
+    /* Contrasting gradient underline */
+    border-radius: 50px;
+    /* Rounded corners for the underline */
+    transition: width 0.2s ease-in-out;
+    /* Smooth animation */
+}
+
+/* Hover effect for the underline */
+nav ul li a:hover::after {
+    width: 100%;
+    /* Expand underline to full width */
+}
+
+/* Optional Keyframe Animation */
+@keyframes infiniteRotation {
+    0% {
+        transform: rotate(0deg); /* Start rotation from 0 degrees */
+    }
+
+    100% {
+        transform: rotate(360deg); /* Rotate to 360 degrees */
+    }
+}
+
+/* Optional Keyframe Animation */
+@keyframes pulseGlow {
+    0% {
+        text-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+    }
+
+    50% {
+        text-shadow: 0px 6px 20px rgba(255, 215, 0, 0.8);
+    }
+
+    100% {
+        text-shadow: 0px 4px 10px rgba(255, 215, 0, 0.5);
+    }
+}
+@keyframes titleWaveGlow {
+    0% {
+        transform: translateX(0) scale(1);
+        text-shadow: 0px 3px 10px rgba(0, 0, 0, 0.4), 0px 0px 8px rgba(255, 215, 0, 0.5);
+    }
+    25% {
+        transform: translateX(5px) scale(1.05);
+        text-shadow: 0px 6px 15px rgba(255, 215, 0, 0.8), 0px 0px 12px rgba(255, 140, 0, 0.7);
+    }
+    50% {
+        transform: translateX(-5px) scale(1.1);
+        text-shadow: 0px 6px 15px rgba(255, 215, 0, 0.8), 0px 0px 12px rgba(255, 140, 0, 0.7);
+    }
+    75% {
+        transform: translateX(5px) scale(1.05);
+        text-shadow: 0px 6px 15px rgba(255, 215, 0, 0.8), 0px 0px 12px rgba(255, 140, 0, 0.7);
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        text-shadow: 0px 3px 10px rgba(0, 0, 0, 0.4), 0px 0px 8px rgba(255, 215, 0, 0.5);
+    }
+}
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes infiniteRotation {
+    0% {
+        transform: rotate(0deg); /* Start rotation from 0 degrees */
+    }
+
+    100% {
+        transform: rotate(360deg); /* Rotate to 360 degrees */
+    }
+}
+
+/* Keyframe animation for vertical waveform effect */
+@keyframes verticalWaveform {
+    0% {
+        transform: translateY(0); /* Start at normal position */
+    }
+    25% {
+        transform: translateY(-5px); /* Move up slightly */
+    }
+    50% {
+        transform: translateY(5px); /* Move down slightly */
+    }
+    75% {
+        transform: translateY(-5px); /* Move up again */
+    }
+    100% {
+        transform: translateY(0); /* Back to normal position */
+    }
+}

@@ -1,0 +1,192 @@
+.about-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    width: 100vw;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(49, 0, 79, 0.263), rgba(29, 0, 52, 0.992));
+    /* Subtle dark violet gradient */
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    /* Increased width for more space */
+    width: 100%;
+}
+
+.about-image {
+    flex: 1;
+    height: 50%;
+    margin-right: 40px;
+}
+.rotating-border {
+    position: relative;
+    display: inline-block;
+    padding: 5px; /* Adjust padding for border thickness */
+    border-radius: 50%;
+    background: transparent;
+  }
+    
+  .profile-img {
+    width: 100%;
+    max-width: 300px;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    transition: transform 0.5s ease-in-out, box-shadow 1s ease-in-out;
+    transform: rotate(-5deg);
+    box-shadow: 0px 4px 15px rgba(255, 166, 0, 1); /* Orange shadow with opacity */
+  }
+  
+  .profile-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 15px rgba(255, 166, 0, 0.8); /* Orange shadow with opacity */
+  }
+  
+
+.about-text {
+    flex: 2;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    /* Increased size for emphasis */
+    font-weight: bold;
+    color: #333;
+}
+
+.about-text h3 {
+    font-size: 2rem;
+    /* Adjust the size to your preference */
+    font-weight: bold;
+    /* Optionally make it bold */
+}
+
+
+.about-text p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.about-text p strong {
+    font-size: 3rem;
+    /* Increased font size */
+    font-weight: 700;
+    /* Increased font weight */
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    /* Gradient from light to dark */
+    -webkit-background-clip: text;
+    /* Clip the background to the text */
+    color: transparent;
+    /* Make the text color transparent to show the gradient */
+    display: inline;
+    /* Ensures the text behaves like a normal text element */
+    transition: all 0.3s ease;
+    /* Smooth transition for any hover effects */
+}
+
+.download-cv {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #fda085;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.4s ease-in-out;
+    /* Smooth transition for background color, text size, and border radius */
+    font-size: 1.2rem;
+    box-shadow: 0px 4px 10px rgba(255, 140, 0, 0.3);
+}
+
+.download-cv:hover {
+    background-color: #f6d365;
+    /* Transition to a lighter gradient */
+    transform: scale(1.05);
+    /* Slightly enlarge on hover */
+    box-shadow: 0px 4px 15px rgba(255, 140, 0, 0.5);
+    /* More noticeable shadow on hover */
+}
+
+.social-media-links {
+    display: flex;
+    gap: 15px;
+    /* Space between social buttons */
+    margin-top: 20px;
+    /* Add some space above the social buttons */
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    /* Fixed size for the buttons */
+    height: 50px;
+    border-radius: 50%;
+    /* Make buttons circular */
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    /* Gradient background */
+    color: white;
+    /* Icon color */
+    font-size: 1.5rem;
+    /* Adjust icon size */
+    box-shadow: 0px 4px 10px rgba(255, 140, 0, 0.3);
+    /* Subtle shadow for depth */
+    transition: all 0.3s ease-in-out;
+    /* Smooth hover effect */
+    text-decoration: none;
+    /* Remove underline for links */
+}
+
+.social-btn:hover {
+    transform: scale(1.1);
+    /* Slightly enlarge on hover */
+    box-shadow: 0px 4px 15px rgba(255, 140, 0, 0.5);
+    /* More prominent shadow on hover */
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    /* Slightly lighter gradient on hover */
+}
+
+.linkedin {
+    background: linear-gradient(135deg, #0077b5, #4a90e2);
+    /* LinkedIn colors */
+}
+
+.linkedin:hover {
+    background: linear-gradient(135deg, #005582, #0077b5);
+    /* Darker LinkedIn colors on hover */
+}
+
+.github {
+    background: linear-gradient(135deg, #333333, #6e6e6e);
+    /* GitHub gray gradient */
+}
+
+.github:hover {
+    background: linear-gradient(135deg, #1a1a1a, #333333);
+    /* Darker gray on hover */
+}
+
+.twitter {
+    background: linear-gradient(135deg, #1da1f2, #1b95e0);
+    /* Twitter blue gradient */
+}
+
+.twitter:hover {
+    background: linear-gradient(135deg, #0077b5, #1da1f2);
+    /* Darker blue on hover */
+}
+
+.instagram {
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    /* Instagram gradient */
+}
+
+.instagram:hover {
+    background: linear-gradient(135deg, #d8802d, #c9553c, #b02143, #a11c66, #901388);
+    /* Slightly darker gradient on hover */
+}
