@@ -22,17 +22,17 @@ const projects = [
   },
   {
     category: "Portfolio",
-    name: "Bostami",
-    description: "Personal Portfolio template HTML & CSS",
-    link: "https://portfolio-sandy2005.vercel.app/",
-    image: BostamiImage, 
-  },
-  {
-    category: "Portfolio",
     name: "Sandy's Portfolio",
     description: "Personal Portfolio template ReactJs",
     link: "https://portfolio-sandy2005.vercel.app/",
     image: PersonalImage, 
+  },
+  {
+    category: "Portfolio",
+    name: "Bostami",
+    description: "Personal Portfolio template HTML & CSS",
+    link: "https://portfolio-sandy2005.vercel.app/",
+    image: BostamiImage, 
   },
   {
     category: "Tasks",
