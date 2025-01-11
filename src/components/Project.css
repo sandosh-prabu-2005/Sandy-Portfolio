@@ -13,6 +13,7 @@ body {
   width: 100vw;
   padding: 40px 20px;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(49, 0, 79, 0.263));
+
 }
 
 .projects-header {
@@ -166,6 +167,29 @@ body {
   background: #feb47b;
   transform: scale(1.2);
   box-shadow: 0 10px 20px rgba(255, 126, 95, 0.6);
+}
+/* Styling for the visit link */
+.visit-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #007BFF;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.visit-link i {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for the visit link */
+.visit-link:hover {
+  color: #000;
+}
+
+.visit-link:hover i {
+  transform: translateX(3px) rotate(-45deg); /* Moves slightly and rotates the arrow */
 }
 
 /* Animations */

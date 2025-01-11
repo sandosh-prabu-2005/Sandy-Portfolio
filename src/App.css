@@ -1,15 +1,13 @@
-/* Import Poppins font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
 /* Global Styles */
 :root {
-  --primary-color: #011d44;  /* Dark Navy Blue */
+  --primary-color: #011d44; /* Dark Navy Blue */
   --secondary-color: #010f1b; /* Almost black, very dark blue */
   --background-color: #000000; /* Pure black background */
-  --text-color: #ffffff;  /* White text */
+  --text-color: #ffffff; /* White text */
   --highlight-color: #8a2be2; /* Violet for highlights */
   --text-highlight-color: #d4a1ff; /* Lighter violet for special emphasis */
 }
+
 html {
   user-select: none;
   scroll-behavior: smooth;
@@ -36,21 +34,67 @@ a:hover {
   color: var(--text-highlight-color);
 }
 
+/* Scroll-to-Top Button Styles */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  background: conic-gradient(#ff7e5f 0%, #feb47b 0%);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s, transform 0.4s, background 0.3s;
+  z-index: 1000;
+}
+
+.scroll-to-top:hover {
+  box-shadow: 0 6px 20px rgba(255, 126, 95, 0.6);
+}
+
+.scroll-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.scroll-percentage {
+  position: absolute;
+  bottom: -20px;
+  font-size: 0.8rem;  
+  color: white;
+}
+
+/* Show button when active */
+.scroll-to-top.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Header Styles */
 header {
   color: var(--text-color);
   padding: 1.5rem;
   text-align: center;
   font-size: 2rem;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);  /* Darker shadow for depth */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
   animation: slideDown 1s ease-out;
-  border-bottom: 2px solid var(--highlight-color); /* Violet contrast between header and content */
+  border-bottom: 2px solid var(--highlight-color);
 }
 
 /* Main Section Styles */
 main {
   padding: 2rem;
   animation: fadeIn 1s ease-in-out;
+  width: 100vw;
 }
 
 /* Footer Styles */
@@ -60,7 +104,7 @@ footer {
   padding: 1rem;
   position: sticky;
   bottom: 0;
-  border-top: 2px solid var(--highlight-color); /* Violet border to contrast footer */
+  border-top: 2px solid var(--highlight-color);
 }
 
 /* Button Styles */
@@ -73,25 +117,13 @@ button {
   font-size: 1rem;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow to make buttons pop */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
   transform: scale(1.1);
   background-color: var(--text-highlight-color);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4); /* Darker shadow on hover for emphasis */
-}
-
-/* Header Navigation Styles */
-header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
-
-header nav ul li a {
-  color: var(--text-color);
-  text-decoration: none;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Keyframe Animations */
@@ -115,85 +147,15 @@ header nav ul li a {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: var(--background-color);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-color);
-}
-
-.App-link {
-  color: var(--highlight-color);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-/* Scroll-to-Top Button */
-.scroll-to-top {
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  width: 50px;
-  height: 50px;
-  background: conic-gradient(rgb(135, 80, 247) 100%, rgba(135, 80, 247, 0.43) 100%);
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(135, 80, 247, 0.5);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.4s, transform 0.4s, background 0.3s;
-  z-index: 1000;
-}
-
-.scroll-to-top:hover {
-  background: conic-gradient(rgba(135, 80, 247, 0.9) 100%, rgba(135, 80, 247, 0.7) 100%);
-  box-shadow: 0 6px 20px rgba(135, 80, 247, 0.7);
-}
-
-.scroll-to-top .scroll-icon {
-  font-size: 5rem;
-  color: white;
-  
-}
-
-/* Show Button when Active */
+/* Scroll-to-Top Button Show */
 .scroll-to-top {
   opacity: 1;
   transform: translateY(0);
-    width: 70px; /* Increased from 50px to 60px */
-    height: 70px; /* Increased from 50px to 60px */
+  width: 70px;
+  height: 70px;
 }
+
+/* Page Transition Styles */
 .page-transition-enter {
   opacity: 0;
   transform: translateX(-100%);
@@ -214,4 +176,10 @@ header nav ul li a {
   opacity: 0;
   transform: translateX(100%);
   transition: opacity 500ms, transform 500ms;
+}
+
+/* Hover Effects for Scroll Button */
+.scroll-to-top:hover {
+  background: conic-gradient(rgba(135, 80, 247, 0.9) 100%, rgba(135, 80, 247, 0.7) 100%);
+  box-shadow: 0 6px 20px rgba(135, 80, 247, 0.7);
 }

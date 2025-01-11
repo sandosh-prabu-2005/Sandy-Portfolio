@@ -6,7 +6,7 @@
     padding: 1rem 2rem;
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(49, 0, 79, 0.263), rgba(29, 0, 52, 0.992)); /* Subtle dark violet gradient */
     color: white;
-    height: 90px;
+    height: 100px;
     font-size: 1.5rem;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
