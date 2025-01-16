@@ -4,6 +4,8 @@ import BostamiImage from "../Assets/Bostami.png";
 import GuesstheLogo from "../Assets/GuesstheLogo.png";
 import hangman from "../Assets/hangman.png";
 import PersonalImage from "../Assets/PersonalImage.png";
+import Add2Cart from "../Assets/add2cart.jpg";
+
 
 const projects = [
   {
@@ -15,10 +17,10 @@ const projects = [
   },
   {
     category: "E-commerce",
-    name: "Fashion",
+    name: "Mobile Cart",
     description: "Fashion E-commerce Template Dark Theme",
-    link: "https://example.com/fashion",
-    image: "https://via.placeholder.com/300x200?text=Fashion+E-commerce",
+    link: "https://mob-cart.vercel.app/",
+    image: Add2Cart,
   },
   {
     category: "Portfolio",
