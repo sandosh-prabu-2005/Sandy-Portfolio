@@ -26,7 +26,7 @@ const projects = [
     category: "Portfolio",
     name: "Sandy's Portfolio",
     description: "Personal Portfolio template ReactJs",
-    link: "https://portfolio-sandy2005.vercel.app/",
+    link: "https://sandy-portfolio-beta.vercel.app/",
     image: PersonalImage, 
   },
   {
