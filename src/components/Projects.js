@@ -10,13 +10,6 @@ import Add2Cart from "../Assets/add2cart.jpg";
 const projects = [
   {
     category: "E-commerce",
-    name: "Nest",
-    description: "Nest is the site about vegetables and groceries shopping",
-    link: "https://example.com/nest",
-    image: "https://via.placeholder.com/300x200?text=Nest+E-commerce",
-  },
-  {
-    category: "E-commerce",
     name: "Mobile Cart",
     description: "Fashion E-commerce Template Dark Theme",
     link: "https://mob-cart.vercel.app/",
