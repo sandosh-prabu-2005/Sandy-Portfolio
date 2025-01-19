@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Skills from "./components/Skills";
+import TestimonialsPage from "./components/TestimonialsPage";
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -20,11 +21,26 @@ function App() {
 
       setScrollPercentage(scrollPosition);
       setShowScroll(scrollTop > 300);
+
+      // Rotate the background circle based on the scroll position
+      const rotationDegree = scrollTop * 0.1; // Adjust the multiplier for speed
+
+      const circleBackground = document.querySelector('.circle-background');
+      if (circleBackground) {
+        circleBackground.style.transform = `rotate(${rotationDegree}deg)`;
+      }
+
+      const circleForeground = document.querySelector('.circle-foreground');
+      if (circleForeground) {
+        circleForeground.style.transform = `rotate(${rotationDegree * -1}deg)`; // Reverse the foreground rotation
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener when the component unmounts
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -39,6 +55,7 @@ function App() {
       <main>
         <Projects />
         <Skills />
+        <TestimonialsPage />
         <Contact />
       </main>
       {/* Scroll-to-Top Button */}
@@ -51,6 +68,10 @@ function App() {
             background: `conic-gradient(#feb47b 0% ${(100 - scrollPercentage)}%, #000 ${(100 - scrollPercentage)}% 100%)`,
           }}
         >
+          <div className="circle-wrapper">
+            <div className="circle-background"></div>
+            <div className="circle-foreground"></div>
+          </div>
           <svg
             stroke="currentColor"
             fill="currentColor"
@@ -63,7 +84,6 @@ function App() {
           </svg>
           <span className="scroll-percentage">{scrollPercentage}%</span>
         </button>
-
       )}
     </div>
   );

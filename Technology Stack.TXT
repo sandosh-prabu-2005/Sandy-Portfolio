@@ -1,0 +1,49 @@
+Technology Stack
+1. Programming Languages
+Backend: Python
+Example: Python is used for developing the backend logic, integrating AI models, and handling APIs.
+Frontend: JavaScript (React.js)
+Example: React.js is used for building a responsive and interactive user interface.
+2. AI/ML Models
+Speech-to-Text: Whisper
+Example: Whisper processes voice inputs for commands and queries.
+Image Recognition: CLIP
+Example: CLIP identifies and interprets traffic signs from user-uploaded images.
+Prediction Models: Gemini
+Example: Gemini predicts accident hotspots based on traffic data.
+3. Frameworks & Libraries
+Frontend Development: React.js
+Example: React.js is used for creating a dynamic, user-friendly interface and managing frontend states.
+Backend Development: Flask (or Django)
+Example: Flask is used to handle API requests and serve data to the React frontend.
+AI/ML Libraries: TensorFlow, PyTorch
+Example: TensorFlow or PyTorch are used for training and deploying AI models.
+API Communication: Axios (in React.js)
+Example: Axios is used for making HTTP requests between the frontend and backend.
+4. Platforms
+Deployment: AWS or Google Cloud
+Example: AWS is used to host the chatbot backend and manage cloud-based storage.
+Integration: Twilio
+Example: Twilio integrates SMS notifications and user alerts for traffic updates.
+5. Databases
+Database Management: Firebase or PostgreSQL
+Example: Firebase handles real-time data syncing for user sessions, while PostgreSQL manages structured traffic and user data.
+6. Tools
+Version Control: GitHub
+Example: GitHub is used for version control and team collaboration on codebases.
+Project Management: Trello
+Example: Trello is used to track development progress and assign tasks to team members.
+UI/UX Design: Figma
+Example: Figma is used to prototype and design the chatbot interface.
+7. Accessibility Features
+Voice Integration: Google Speech-to-Text API
+Example: Google Speech API enables seamless voice command functionality.
+Multi-Language Support: Python Libraries
+Example: Libraries like Googletrans are used for enabling multilingual chatbot support.
+8. Testing Tools
+Backend Testing: Pytest
+Example: Pytest is used to validate API endpoints and backend functionality.
+Frontend Testing: Jest and React Testing Library
+Example: Jest and React Testing Library are used to ensure the UI components function correctly.
+UI Automation Testing: Selenium
+Example: Selenium is used for automating and testing the user interface interactions.

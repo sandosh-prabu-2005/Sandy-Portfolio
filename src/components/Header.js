@@ -14,8 +14,7 @@ const Header = () => {
           <li><a href="#home">Home</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#skills">Skills</a></li>
-          <li><a href="#certificate">Certificates</a></li>
-          <li><a href="#resume">Resume</a></li>
+          <li><a href="#test">Testimonials</a></li>
           <li><a href="#contact">Contact</a></li>
           <button><a href="mailTo:sandoshprabu50@gmail.com">Hire Me!</a></button>
         </ul>
