@@ -6,22 +6,23 @@ import jk3 from "../Assets/jk3.jpg";
 
 const testimonials = [
     {
-        name: "JeyaRam ",
+        name: "JeyaKrishnan ",
         role: "CEO, TechCorp",
         feedback:
             "Working with you was an absolute pleasure! Your attention to detail and commitment to excellence are remarkable.",
         image: jk,
+
     },
     {
-        name: "Saravana Krishnan",
-        role: "Senior Developer, CodeWorks",
+        name: "Thalapathy Vijay",
+        role: "Senior Developer, TVK",
         feedback:
             "Your expertise and problem-solving skills have significantly improved our team's efficiency. Thank you for your hard work!",
         image: jk2,
     },
     {
-        name: "Sandhi",
-        role: "Project Manager, Creative Agency",
+        name: "MS Dhoni",
+        role: "Project Manager, CSK",
         feedback:
             "You bring creativity and innovation to every project. I truly appreciate your collaborative approach and dedication.",
         image: jk3,
