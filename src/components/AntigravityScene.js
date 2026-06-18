@@ -1,427 +1,360 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef, useMemo, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import "./PlanetShader"; // register procedural shaders
+import { useMotionValueEvent } from "framer-motion";
 
-const SUN_POS = [0, -2.5, -115];
-
-// Accurate config for our custom procedural planets (positioned to fly past the sides)
-const PLANETS = [
-  {
-    name: "Neptune",
-    type: 7,
-    radius: 0.6,
-    pos: [2.5, 0.2, 100],
-    baseColor: new THREE.Color(0x0f2a6b),
-    detailColor: new THREE.Color(0x08163a),
-    accentColor: new THREE.Color(0x2d68c4),
-    rotSpeed: 0.15,
-    glowColor: new THREE.Color(0x2563eb)
-  },
-  {
-    name: "Uranus",
-    type: 6,
-    radius: 0.65,
-    pos: [-2.6, -0.2, 75],
-    baseColor: new THREE.Color(0x56a6a6),
-    detailColor: new THREE.Color(0x2d6b6b),
-    accentColor: new THREE.Color(0x8cd3d3),
-    rotSpeed: 0.12,
-    tilt: [0.1, 0, 0.4],
-    hasRings: true,
-    glowColor: new THREE.Color(0x2dd4bf)
-  },
-  {
-    name: "Saturn",
-    type: 5,
-    radius: 0.85,
-    pos: [2.8, 0.3, 50],
-    baseColor: new THREE.Color(0x8c7855),
-    detailColor: new THREE.Color(0x594c33),
-    accentColor: new THREE.Color(0xbfa57d),
-    rotSpeed: 0.22,
-    hasSaturnRings: true,
-    glowColor: new THREE.Color(0xf59e0b)
-  },
-  {
-    name: "Jupiter",
-    type: 4,
-    radius: 1.3,
-    pos: [-3.2, 0.4, 25],
-    baseColor: new THREE.Color(0x8a6e45),
-    detailColor: new THREE.Color(0x5c4222),
-    accentColor: new THREE.Color(0xcfa370),
-    rotSpeed: 0.28,
-    glowColor: new THREE.Color(0xea580c)
-  },
-  {
-    name: "Mars",
-    type: 3,
-    radius: 0.45,
-    pos: [2.0, -0.2, -5],
-    baseColor: new THREE.Color(0x8c3315),
-    detailColor: new THREE.Color(0x4a1807),
-    accentColor: new THREE.Color(0xbf6747),
-    rotSpeed: 0.1,
-    glowColor: new THREE.Color(0xef4444)
-  },
-  {
-    name: "Earth",
-    type: 2,
-    radius: 0.65,
-    pos: [-2.2, 0.2, -35],
-    baseColor: new THREE.Color(0x0f3460),
-    detailColor: new THREE.Color(0x228b22),
-    accentColor: new THREE.Color(0x8b5a2b),
-    rotSpeed: 0.15,
-    hasMoon: true,
-    glowColor: new THREE.Color(0x60a5fa)
-  },
-  {
-    name: "Venus",
-    type: 1,
-    radius: 0.6,
-    pos: [2.0, 0.1, -65],
-    baseColor: new THREE.Color(0x8c5e26),
-    detailColor: new THREE.Color(0xbf8b4e),
-    accentColor: new THREE.Color(0xd9b273),
-    rotSpeed: -0.05,
-    glowColor: new THREE.Color(0xfacc15)
-  },
-  {
-    name: "Mercury",
-    type: 0,
-    radius: 0.38,
-    pos: [-1.6, -0.1, -85],
-    baseColor: new THREE.Color(0x404040),
-    detailColor: new THREE.Color(0x1a1a1a),
-    accentColor: new THREE.Color(0x666666),
-    rotSpeed: 0.08,
-    glowColor: new THREE.Color(0x94a3b8)
+function createCircleTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 16;
+  canvas.height = 16;
+  const ctx = canvas.getContext("2d");
+  if (ctx) {
+    const gradient = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+    gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+    gradient.addColorStop(0.3, "rgba(96, 165, 250, 0.8)"); // Sky blue glow
+    gradient.addColorStop(0.7, "rgba(59, 130, 246, 0.4)");  // Blue halo
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 16, 16);
   }
-];
+  return new THREE.CanvasTexture(canvas);
+}
 
-// Cinematic Camera Path Keyframes - Expanded scale linear bypass trajectory
-const KEYFRAMES = [
-  { p: 0.0, pos: [0, 0.2, 125], target: [0, 0.2, -220] },    // Neptune approaching
-  { p: 0.12, pos: [0, 0.2, 100], target: [0, 0.2, -220] },    // Straight past Neptune
-  { p: 0.24, pos: [0, 0.2, 75], target: [0, 0.2, -220] },    // Straight past Uranus
-  { p: 0.38, pos: [0, 0.2, 50], target: [0, 0.2, -220] },    // Straight past Saturn
-  { p: 0.52, pos: [0, 0.2, 25], target: [0, 0.2, -220] },    // Straight past Jupiter
-  { p: 0.64, pos: [0, 0.2, -5], target: [0, 0.2, -220] },    // Straight past Mars
-  { p: 0.74, pos: [0, 0.2, -35], target: [0, 0.2, -220] },    // Straight past Earth
-  { p: 0.84, pos: [0, 0.2, -65], target: [0, 0.2, -220] },    // Straight past Venus
-  { p: 0.88, pos: [0, 0.2, -85], target: [0, 0.2, -220] },    // Straight past Mercury
-  { p: 0.94, pos: [0, 2.2, -115], target: [0, 0.2, -220] },    // Clear Sun by rising slightly
-  { p: 1.0, pos: [0, 0.0, -170], target: [0, 0.0, -220] }     // Face Galaxy directly
-];
-
-// Eased lerp based on scroll progress
-function getInterpolatedState(p) {
-  p = Math.max(0, Math.min(1, p));
-  let i = 0;
-  for (; i < KEYFRAMES.length - 1; i++) {
-    if (p >= KEYFRAMES[i].p && p <= KEYFRAMES[i + 1].p) {
-      break;
-    }
+function isWebGLAvailable() {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      typeof window !== "undefined" &&
+      window.WebGLRenderingContext &&
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    );
+  } catch (e) {
+    return false;
   }
-  const k1 = KEYFRAMES[i];
-  const k2 = KEYFRAMES[i + 1];
-  const t = (p - k1.p) / (k2.p - k1.p);
-  const smoothT = t * t * (3 - 2 * t); // ease-in-out
-
-  const pos = new THREE.Vector3().fromArray(k1.pos).lerp(new THREE.Vector3().fromArray(k2.pos), smoothT);
-  const target = new THREE.Vector3().fromArray(k1.target).lerp(new THREE.Vector3().fromArray(k2.target), smoothT);
-
-  return { pos, target };
 }
 
-// ----------------- Procedural Starry Sky Dome Mesh -----------------
-function StarrySky() {
-  const ref = useRef(null);
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.uTime = state.clock.getElapsedTime();
-    }
+export default function AntigravityScene({ scrollYProgress }) {
+  const canvasRef = useRef(null);
+  const scrollProgressRef = useRef(0);
+  const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    scrollProgressRef.current = v;
   });
 
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      mouseRef.current.targetX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (!isWebGLAvailable()) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setSize(width, height, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+    camera.position.set(0, 0.5, 7.5);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambientLight);
+
+    const directionalLight1 = new THREE.DirectionalLight(0x60a5fa, 1.5);
+    directionalLight1.position.set(5, 5, 8);
+    scene.add(directionalLight1);
+
+    const directionalLight2 = new THREE.DirectionalLight(0x3b82f6, 1.0);
+    directionalLight2.position.set(-5, -3, -5);
+    scene.add(directionalLight2);
+
+    const dotTexture = createCircleTexture();
+
+    const hologramGroup = new THREE.Group();
+    scene.add(hologramGroup);
+
+    const N = 4000;
+    const wavePositions = new Float32Array(N * 3);
+    const spherePositions = new Float32Array(N * 3);
+    const torusPositions = new Float32Array(N * 3);
+    const vortexPositions = new Float32Array(N * 3);
+
+    const waveColors = new Float32Array(N * 3);
+    const sphereColors = new Float32Array(N * 3);
+    const torusColors = new Float32Array(N * 3);
+    const vortexColors = new Float32Array(N * 3);
+
+    const gridSize = Math.floor(Math.sqrt(N));
+    for (let i = 0; i < N; i++) {
+      const xIndex = i % gridSize;
+      const zIndex = Math.floor(i / gridSize);
+      const x = ((xIndex / gridSize) - 0.5) * 11.0;
+      const z = ((zIndex / (N / gridSize)) - 0.5) * 11.0;
+      wavePositions[i * 3] = x;
+      wavePositions[i * 3 + 1] = 0;
+      wavePositions[i * 3 + 2] = z;
+
+      const rMix = Math.random() * 0.15;
+      waveColors[i * 3] = 0.133 + rMix;
+      waveColors[i * 3 + 1] = 0.827 - rMix;
+      waveColors[i * 3 + 2] = 0.933;
+    }
+
+    const radius = 2.8;
+    for (let i = 0; i < N; i++) {
+      const phi = Math.acos(1 - 2 * (i + 0.5) / N);
+      const theta = Math.sqrt(N * Math.PI) * phi;
+
+      spherePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      spherePositions[i * 3 + 1] = radius * Math.cos(phi);
+      spherePositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+
+      const rMix = Math.random() * 0.15;
+      sphereColors[i * 3] = 0.231 + rMix;
+      sphereColors[i * 3 + 1] = 0.510;
+      sphereColors[i * 3 + 2] = 0.965 - rMix;
+    }
+
+    const torusRadius = 3.0;
+    const tubeRadius = 0.9;
+    for (let i = 0; i < N; i++) {
+      const theta = (i / N) * Math.PI * 2 * 6;
+      const phi = (i / N) * Math.PI * 2 * 50;
+
+      torusPositions[i * 3] = (torusRadius + tubeRadius * Math.cos(phi)) * Math.cos(theta);
+      torusPositions[i * 3 + 1] = (torusRadius + tubeRadius * Math.cos(phi)) * Math.sin(theta);
+      torusPositions[i * 3 + 2] = tubeRadius * Math.sin(phi);
+
+      const rMix = Math.random() * 0.15;
+      torusColors[i * 3] = 0.655 - rMix;
+      torusColors[i * 3 + 1] = 0.545 + rMix;
+      torusColors[i * 3 + 2] = 0.980;
+    }
+
+    for (let i = 0; i < N; i++) {
+      const t = (i / N) * Math.PI * 2 * 6;
+      const isSecondHelix = i % 2 === 0 ? 1 : -1;
+      const rVal = 1.0 + (i / N) * 1.6;
+      
+      vortexPositions[i * 3] = rVal * Math.cos(t) * isSecondHelix;
+      vortexPositions[i * 3 + 1] = ((i / N) - 0.5) * 6.0;
+      vortexPositions[i * 3 + 2] = rVal * Math.sin(t) * isSecondHelix;
+
+      const rMix = Math.random() * 0.15;
+      vortexColors[i * 3] = 0.961;
+      vortexColors[i * 3 + 1] = 0.620 + rMix;
+      vortexColors[i * 3 + 2] = 0.043 - rMix;
+    }
+
+    const particleGeom = new THREE.BufferGeometry();
+    const currentPositions = new Float32Array(N * 3);
+    const currentColors = new Float32Array(N * 3);
+    
+    currentPositions.set(wavePositions);
+    currentColors.set(waveColors);
+
+    particleGeom.setAttribute("position", new THREE.BufferAttribute(currentPositions, 3));
+    particleGeom.setAttribute("color", new THREE.BufferAttribute(currentColors, 3));
+
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.22,
+      map: dotTexture,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const particleSystem = new THREE.Points(particleGeom, particleMat);
+    hologramGroup.add(particleSystem);
+
+    const dustCount = 800;
+    const dustGeom = new THREE.BufferGeometry();
+    const dustPositions = new Float32Array(dustCount * 3);
+    for (let i = 0; i < dustCount; i++) {
+      const r = 12 + Math.random() * 18;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      dustPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      dustPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      dustPositions[i * 3 + 2] = r * Math.cos(phi);
+    }
+    dustGeom.setAttribute("position", new THREE.BufferAttribute(dustPositions, 3));
+    const dustMat = new THREE.PointsMaterial({
+      color: 0x3b82f6,
+      size: 0.12,
+      map: dotTexture,
+      transparent: true,
+      opacity: 0.35,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const dustField = new THREE.Points(dustGeom, dustMat);
+    scene.add(dustField);
+
+    const cameraPoints = [
+      new THREE.Vector3(0, 0.8, 8.5),
+      new THREE.Vector3(2.8, -0.6, 3.2),
+      new THREE.Vector3(-4.5, 3.5, 6.8),
+      new THREE.Vector3(0, 8.0, 1.0)
+    ];
+
+    const lookAtPoints = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0.8, -0.2, 0.4),
+      new THREE.Vector3(-0.8, 0.4, -0.4),
+      new THREE.Vector3(0, 0, 0)
+    ];
+
+    const cameraPath = new THREE.CatmullRomCurve3(cameraPoints);
+    const lookAtPath = new THREE.CatmullRomCurve3(lookAtPoints);
+
+    let currentScroll = scrollProgressRef.current;
+    let time = 0;
+    let animationFrameId;
+
+    const tick = () => {
+      time += 0.005;
+
+      const targetScroll = scrollProgressRef.current;
+      currentScroll = targetScroll; // perfectly synchronized with content scroll
+
+      const mouse = mouseRef.current;
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+      dustField.rotation.y = -time * 0.02;
+      dustField.rotation.x = time * 0.01;
+
+      const clampedScroll = Math.max(0, Math.min(1, currentScroll));
+      
+      let pSource, pTarget, cSource, cTarget, localT = 0;
+
+      if (clampedScroll <= 0.33) {
+        pSource = wavePositions; pTarget = spherePositions;
+        cSource = waveColors; cTarget = sphereColors;
+        localT = clampedScroll / 0.33;
+      } else if (clampedScroll <= 0.66) {
+        pSource = spherePositions; pTarget = torusPositions;
+        cSource = sphereColors; cTarget = torusColors;
+        localT = (clampedScroll - 0.33) / 0.33;
+      } else {
+        pSource = torusPositions; pTarget = vortexPositions;
+        cSource = torusColors; cTarget = vortexColors;
+        localT = (clampedScroll - 0.66) / 0.34;
+      }
+
+      const easeT = localT * localT * (3 - 2 * localT);
+      const posAttr = particleGeom.attributes.position;
+      const posArray = posAttr.array;
+      const colAttr = particleGeom.attributes.color;
+      const colArray = colAttr.array;
+
+      const mouseVec = new THREE.Vector3(mouse.x * 4.5, mouse.y * 3.5, 0);
+
+      for (let i = 0; i < N; i++) {
+        const i3 = i * 3;
+        let x = pSource[i3] + (pTarget[i3] - pSource[i3]) * easeT;
+        let y = pSource[i3 + 1] + (pTarget[i3 + 1] - pSource[i3 + 1]) * easeT;
+        let z = pSource[i3 + 2] + (pTarget[i3 + 2] - pSource[i3 + 2]) * easeT;
+
+        if (clampedScroll < 0.33) {
+          const waveWeight = 1.0 - (clampedScroll / 0.33);
+          const ripple = Math.sin(x * 0.6 + time * 2.0) * Math.cos(z * 0.6 + time * 2.0) * 0.5 * waveWeight;
+          y += ripple;
+        }
+
+        const dx = x - mouseVec.x;
+        const dy = y - mouseVec.y;
+        const dz = z - mouseVec.z;
+        const distSq = dx * dx + dy * dy + dz * dz;
+        const maxDistSq = 4.0;
+
+        if (distSq < maxDistSq) {
+          const dist = Math.sqrt(distSq);
+          if (dist > 0.01) {
+            const force = (2.0 - dist) / 2.0 * 0.45;
+            x += (dx / dist) * force;
+            y += (dy / dist) * force;
+            z += (dz / dist) * force;
+          }
+        }
+
+        posArray[i3] = x;
+        posArray[i3 + 1] = y;
+        posArray[i3 + 2] = z;
+
+        colArray[i3] = cSource[i3] + (cTarget[i3] - cSource[i3]) * easeT;
+        colArray[i3 + 1] = cSource[i3 + 1] + (cTarget[i3 + 1] - cSource[i3 + 1]) * easeT;
+        colArray[i3 + 2] = cSource[i3 + 2] + (cTarget[i3 + 2] - cSource[i3 + 2]) * easeT;
+      }
+
+      posAttr.needsUpdate = true;
+      colAttr.needsUpdate = true;
+
+      hologramGroup.rotation.y = time * 0.08 + currentScroll * Math.PI * 0.5;
+      hologramGroup.rotation.x = mouse.y * 0.15;
+      hologramGroup.rotation.z = mouse.x * 0.15;
+
+      const camPos = cameraPath.getPointAt(clampedScroll);
+      const lookPos = lookAtPath.getPointAt(clampedScroll);
+
+      camera.position.set(camPos.x, camPos.y, camPos.z);
+      camera.lookAt(lookPos);
+
+      renderer.render(scene, camera);
+      animationFrameId = requestAnimationFrame(tick);
+    };
+
+    tick();
+
+    const handleResize = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+
+      renderer.dispose();
+      dotTexture.dispose();
+      particleGeom.dispose();
+      particleMat.dispose();
+      dustGeom.dispose();
+      dustMat.dispose();
+    };
+  }, []);
+
   return (
-    <mesh scale={240}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <starrySkyMaterial ref={ref} side={THREE.BackSide} depthWrite={false} />
-    </mesh>
-  );
-}
-
-// ----------------- Procedural Solid Disk Spiral Galaxy Mesh -----------------
-function SpiralGalaxy({ opacity }) {
-  const ref = useRef(null);
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.uTime = state.clock.getElapsedTime();
-    }
-  });
-
-  if (opacity <= 0) return null;
-
-  return (
-    <group position={[0, 0, -220]}>
-      {/* Volumetric central core glow */}
-      <mesh>
-        <sphereGeometry args={[2.0, 32, 32]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={opacity * 0.4} />
-      </mesh>
-
-      {/* Nebula haze clouds background */}
-      <mesh scale={7}>
-        <sphereGeometry args={[1, 16, 16]} />
-        <meshBasicMaterial color="#6366f1" transparent opacity={opacity * 0.14} depthWrite={false} blending={THREE.AdditiveBlending} />
-      </mesh>
-
-      {/* Solid Circular Disk Galaxy Plane */}
-      <mesh rotation={[-0.45, 0.4, 0.12]}>
-        <planeGeometry args={[36, 36]} />
-        <spiralGalaxyMaterial ref={ref} transparent depthWrite={false} blending={THREE.AdditiveBlending} uOpacity={opacity} />
-      </mesh>
-    </group>
-  );
-}
-
-// ----------------- Solar Planets (Solid Meshes + Atmospheric Halos) -----------------
-function PlanetKeyed({ planet, sunPos }) {
-  const meshRef = useRef(null);
-  const cloudRef = useRef(null);
-  const moonRef = useRef(null);
-
-  const matRef = useRef(null);
-  const cloudMatRef = useRef(null);
-  const ringMatRef = useRef(null);
-  const glowMatRef = useRef(null);
-
-  useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * planet.rotSpeed;
-    }
-    if (cloudRef.current) {
-      cloudRef.current.rotation.y += delta * (planet.rotSpeed * 1.15);
-      cloudRef.current.rotation.x += delta * 0.01;
-    }
-    if (matRef.current) {
-      matRef.current.uTime = state.clock.getElapsedTime();
-    }
-    if (cloudMatRef.current) {
-      cloudMatRef.current.uTime = state.clock.getElapsedTime();
-    }
-
-    if (moonRef.current) {
-      const time = state.clock.getElapsedTime() * 0.45;
-      moonRef.current.position.x = Math.sin(time) * 1.4;
-      moonRef.current.position.z = Math.cos(time) * 1.4;
-      moonRef.current.rotation.y = time;
-    }
-
-    // Camera clipping distance-based opacity fade
-    const camPos = state.camera.position;
-    const planetPos = new THREE.Vector3(...planet.pos);
-    const dist = camPos.distanceTo(planetPos);
-
-    const minThreshold = planet.radius * 1.4;
-    const maxThreshold = planet.radius * 2.4;
-
-    let targetOpacity = 1;
-    if (dist < maxThreshold) {
-      targetOpacity = Math.max(0, (dist - minThreshold) / (maxThreshold - minThreshold));
-    }
-
-    let currentOpacity = matRef.current ? matRef.current.uOpacity : 1;
-    let nextOpacity = THREE.MathUtils.lerp(currentOpacity, targetOpacity, delta * 9);
-    if (Math.abs(nextOpacity - targetOpacity) < 0.01) nextOpacity = targetOpacity;
-
-    if (matRef.current) matRef.current.uOpacity = nextOpacity;
-    if (cloudMatRef.current) cloudMatRef.current.uOpacity = nextOpacity;
-    if (ringMatRef.current) ringMatRef.current.uOpacity = nextOpacity;
-    if (glowMatRef.current) glowMatRef.current.uOpacity = nextOpacity;
-  });
-
-  return (
-    <group position={planet.pos} rotation={planet.tilt || [0, 0, 0]}>
-      {/* Solid Atmospheric Fresnel Halo Glow */}
-      <mesh scale={planet.radius * 1.16}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <atmosphereGlowMaterial ref={glowMatRef} transparent depthWrite={false} blending={THREE.AdditiveBlending} uGlowColor={planet.glowColor} uIntensity={1.4} />
-      </mesh>
-
-      {/* Planet Surface Sphere */}
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[planet.radius, 48, 48]} />
-        <planetMaterial
-          ref={matRef}
-          transparent
-          uType={planet.type}
-          uBaseColor={planet.baseColor}
-          uDetailColor={planet.detailColor}
-          uAccentColor={planet.accentColor}
-          uSunPos={sunPos}
-        />
-      </mesh>
-
-      {/* Cloud layer (Earth only) */}
-      {planet.name === "Earth" && (
-        <mesh ref={cloudRef} scale={1.012}>
-          <sphereGeometry args={[planet.radius, 48, 48]} />
-          <earthCloudsMaterial ref={cloudMatRef} transparent depthWrite={false} uSunPos={sunPos} />
-        </mesh>
-      )}
-
-      {/* Moon (Earth only) */}
-      {planet.hasMoon && (
-        <group ref={moonRef}>
-          <mesh position={[1.4, 0, 0]} scale={0.24}>
-            <sphereGeometry args={[planet.radius, 24, 24]} />
-            <meshStandardMaterial color="#888888" roughness={0.9} metalness={0.1} />
-          </mesh>
-        </group>
-      )}
-
-      {/* Vertical Ring (Uranus only) */}
-      {planet.tilt && planet.hasRings && (
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[planet.radius * 1.35, planet.radius * 1.45, 64]} />
-          <meshBasicMaterial color="#a5f3fc" transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
-        </mesh>
-      )}
-
-      {/* Gorgeous Rings (Saturn only) */}
-      {planet.hasSaturnRings && (
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[planet.radius * 1.35, planet.radius * 2.5, 64]} />
-          <saturnRingMaterial ref={ringMatRef} transparent side={THREE.DoubleSide} uRingColor={planet.accentColor} />
-        </mesh>
-      )}
-    </group>
-  );
-}
-
-// ----------------- Glowing Sun Mesh -----------------
-function SunKeyed({ sunPos }) {
-  const sunRef = useRef(null);
-  const coronaRef = useRef(null);
-  const glowMatRef = useRef(null);
-
-  const matRef = useRef(null);
-  const coronaMatRef = useRef(null);
-
-  useFrame((state, delta) => {
-    if (sunRef.current) {
-      sunRef.current.rotation.y += delta * 0.04;
-    }
-    if (matRef.current) {
-      matRef.current.uTime = state.clock.getElapsedTime();
-    }
-
-    // Distance-based fade
-    const camPos = state.camera.position;
-    const sPos = new THREE.Vector3(...sunPos);
-    const dist = camPos.distanceTo(sPos);
-
-    const minThreshold = 4.2; // Sun radius is 3
-    const maxThreshold = 6.0;
-
-    let targetOpacity = 1;
-    if (dist < maxThreshold) {
-      targetOpacity = Math.max(0, (dist - minThreshold) / (maxThreshold - minThreshold));
-    }
-
-    let currentOpacity = matRef.current ? matRef.current.uOpacity : 1;
-    let nextOpacity = THREE.MathUtils.lerp(currentOpacity, targetOpacity, delta * 9);
-    if (Math.abs(nextOpacity - targetOpacity) < 0.01) nextOpacity = targetOpacity;
-
-    if (matRef.current) matRef.current.uOpacity = nextOpacity;
-    if (coronaMatRef.current) coronaMatRef.current.uOpacity = nextOpacity;
-    if (glowMatRef.current) glowMatRef.current.uOpacity = nextOpacity;
-  });
-
-  return (
-    <group position={sunPos}>
-      {/* Giant Atmospheric Fresnel Corona Glow */}
-      <mesh scale={3.4}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <atmosphereGlowMaterial ref={glowMatRef} transparent depthWrite={false} blending={THREE.AdditiveBlending} uGlowColor={new THREE.Color(0xfb923c)} uIntensity={0.5} />
-      </mesh>
-
-      {/* Convection Surface */}
-      <mesh ref={sunRef}>
-        <sphereGeometry args={[3.0, 64, 64]} />
-        <livingSunMaterial ref={matRef} transparent />
-      </mesh>
-
-      {/* Corona Atmosphere */}
-      <mesh ref={coronaRef} scale={1.05}>
-        <sphereGeometry args={[3.0, 32, 32]} />
-        <sunCoronaMaterial ref={coronaMatRef} transparent depthWrite={false} blending={THREE.AdditiveBlending} />
-      </mesh>
-
-      {/* Main light emitted by the Sun */}
-      <pointLight intensity={2.8} distance={120} color="#ffdfbb" />
-    </group>
-  );
-}
-
-// ----------------- Core Solar Rig -----------------
-function SolarRig({ scrollYProgress }) {
-  const cameraTarget = useRef(new THREE.Vector3(0, 0, 0));
-  const [galaxyOpacity, setGalaxyOpacity] = useState(0);
-
-  useFrame((state, delta) => {
-    const progress = scrollYProgress.get(); // 0.0 to 1.0
-
-    const { pos, target } = getInterpolatedState(progress);
-
-    state.camera.position.lerp(pos, delta * 3.2);
-    cameraTarget.current.lerp(target, delta * 3.2);
-    state.camera.lookAt(cameraTarget.current);
-
-    // Smoothly fade in the spiral galaxy as we bypass the Sun
-    let targetGalOpacity = 0;
-    if (progress > 0.88) {
-      targetGalOpacity = Math.min(1.0, (progress - 0.88) / 0.11);
-    }
-    setGalaxyOpacity(targetGalOpacity);
-  });
-
-  return (
-    <>
-      <StarrySky />
-
-      {PLANETS.map((p) => (
-        <PlanetKeyed key={p.name} planet={p} sunPos={SUN_POS} />
-      ))}
-
-      <SunKeyed sunPos={SUN_POS} />
-
-      <SpiralGalaxy opacity={galaxyOpacity} />
-    </>
-  );
-}
-
-export default function AntigravityScene({ scrollYProgress, onLoaded }) {
-  return (
-    <div className="fixed inset-0 w-full h-[100vh] -z-10 pointer-events-none overflow-hidden bg-black">
-      <Canvas
-        camera={{ position: [0, 0.2, 125], fov: 32 }}
-        gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping }}
-        onCreated={() => onLoaded && onLoaded()}
-      >
-        {/* Soft background ambient fill */}
-        <ambientLight intensity={0.16} />
-
-        {/* Soft fill lighting following the camera slightly to illuminate dark side features */}
-        <directionalLight position={[2, 3, 5]} intensity={0.48} color="#cbd5e1" />
-
-        <SolarRig scrollYProgress={scrollYProgress} />
-      </Canvas>
+    <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 bg-[#020617] overflow-hidden">
+      <canvas ref={canvasRef} className="w-full h-full block" />
+      {/* Translucent dark layer between 3D background and foreground content to guarantee text readability */}
+      <div className="absolute inset-0 bg-slate-950/70" />
     </div>
   );
 }

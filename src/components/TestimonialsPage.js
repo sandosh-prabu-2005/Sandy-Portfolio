@@ -4,14 +4,14 @@ import React from "react";
 import { RiDoubleQuotesL } from "react-icons/ri";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-import jk  from "../Assets/jk.jpg";
-import jk2 from "../Assets/jk2.jpg";
-import jk3 from "../Assets/jk3.jpg";
+import ImgWinner from "../Assets/winner.png";
+import ImgLuckyStar from "../Assets/luckystar.png";
+import ImgCKBilling from "../Assets/ckbilling.png";
 
 const REVIEWS = [
-  { name: "JeyaKrishnan",   role: "CEO, TechCorp",      feedback: "Working with you was an absolute pleasure! Your attention to detail and commitment to excellence are remarkable.",         img: jk  },
-  { name: "Thalapathy Vijay", role: "Senior Dev, TVK",  feedback: "Your expertise and problem-solving skills have significantly improved our team's efficiency. Thank you for your hard work!", img: jk2 },
-  { name: "MS Dhoni",       role: "Project Mgr, CSK",   feedback: "You bring creativity and innovation to every project. I truly appreciate your collaborative approach and dedication.",     img: jk3 },
+  { name: "Winner Weaving Mills", role: "Manufacturer in Sivakasi", feedback: "Lativex Solutions delivered an outstanding corporate website. Our digital presence has significantly improved, bringing a highly professional and premium experience to our manufacturing business.", img: ImgWinner },
+  { name: "Lucky Star Agencies", role: "Fireworks Store, TN", feedback: "Quality is Our Motto. Their expertise in e-commerce transformed our business. The custom platform they built handles our wholesale fireworks orders flawlessly, running 24/7 with perfect reliability.", img: ImgLuckyStar },
+  { name: "CK Fine Arts", role: "Billing & Operations", feedback: "The modern billing platform they designed completely streamlined our operations. It significantly improved our accuracy and enhanced productivity through intuitive, automation-focused workflows.", img: ImgCKBilling },
 ];
 
 function Testimonial3DCard({ r }) {
@@ -49,25 +49,25 @@ function Testimonial3DCard({ r }) {
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="group relative w-full h-full glass-card teal-border p-6 md:p-8 flex flex-col items-center text-center shadow-xl transition-colors duration-300 rounded-3xl"
       >
-        <RiDoubleQuotesL 
-          className="text-teal-500/30 text-4xl mb-4 transition-transform duration-300 group-hover:text-teal-400" 
+        <RiDoubleQuotesL
+          className="text-teal-500/30 text-4xl mb-4 transition-transform duration-300 group-hover:text-teal-400"
           style={{ transform: "translateZ(30px)" }}
         />
-        
-        <div 
-          className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-teal-500/30 mb-4 shadow-lg transition-all duration-500 group-hover:ring-teal-400 group-hover:shadow-teal-500/20"
+
+        <div
+          className="w-16 h-16 rounded-full overflow-hidden bg-white ring-2 ring-teal-500/30 mb-4 shadow-lg transition-all duration-500 group-hover:ring-teal-400 group-hover:shadow-teal-500/20 flex items-center justify-center"
           style={{ transform: "translateZ(60px)" }}
         >
-          <img src={r.img.src ?? r.img} alt={r.name} className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-500" />
+          <img src={r.img.src ?? r.img} alt={r.name} className="w-full h-full object-contain p-1.5 grayscale-[20%] group-hover:grayscale-0 transition-all duration-500" />
         </div>
-        
-        <p 
+
+        <p
           className="text-slate-300 text-[13px] leading-relaxed italic mb-5"
           style={{ transform: "translateZ(40px)" }}
         >
           "{r.feedback}"
         </p>
-        
+
         <div style={{ transform: "translateZ(50px)" }}>
           <h4 className="font-orb text-sm font-bold text-white tracking-wide">{r.name}</h4>
           <p className="font-space text-[10px] text-teal-400 mt-1 uppercase tracking-widest">{r.role}</p>
@@ -79,7 +79,7 @@ function Testimonial3DCard({ r }) {
 
 export default function TestimonialsPage() {
   return (
-    <section id="test" className="py-20 relative">
+    <section id="test" className="py-5 relative">
       <div className="reveal text-center mb-12">
         <p className="font-orb text-[10px] tracking-[0.3em] text-teal-500/70 uppercase mb-1">◈ Testimonials</p>
         <h2 className="font-orb text-3xl md:text-4xl font-black text-white mb-2">Client Feedback</h2>

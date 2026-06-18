@@ -63,22 +63,37 @@ export default function Page() {
   // Wire up CSS slide-up reveal for individual elements
   useReveal(0.12);
 
+  const activeIdxRef = useRef(0);
+
   // Track which section is active for the storytelling indicator
   useMotionValueEvent(smooth, "change", (v) => {
     setScrollPct(Math.round(v * 100));
     setShowScroll(v > 0.04);
 
-    let idx = 0;
-    if (v < 0.15) idx = 0;
-    else if (v < 0.32) idx = 1;
-    else if (v < 0.50) idx = 2;
-    else if (v < 0.68) idx = 3;
-    else if (v < 0.85) idx = 4;
-    else idx = 5;
+    let currentIdx = activeIdxRef.current;
+    let minDistance = Infinity;
+    const scrollY = window.scrollY;
+    // Bias the detection point slightly above the center for better UX
+    const detectionPoint = scrollY + window.innerHeight * 0.4; 
 
-    if (idx !== activeIdx) {
-      setDirection(idx > activeIdx ? 1 : -1);
-      setActiveIdx(idx);
+    SECTIONS.forEach((s, i) => {
+      const el = document.getElementById(s.id);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        // Calculate the center of the element relative to the document
+        const elCenter = rect.top + scrollY + (rect.height / 2);
+        const distance = Math.abs(detectionPoint - elCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentIdx = i;
+        }
+      }
+    });
+
+    if (currentIdx !== activeIdxRef.current) {
+      setDirection(currentIdx > activeIdxRef.current ? 1 : -1);
+      setActiveIdx(currentIdx);
+      activeIdxRef.current = currentIdx;
     }
   });
 

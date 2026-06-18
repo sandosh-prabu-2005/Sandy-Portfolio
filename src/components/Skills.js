@@ -27,7 +27,7 @@ const SKILLS = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-14">
+    <section id="skills" className="py-8">
       <div className="reveal">
         <p className="font-orb text-[10px] tracking-[0.3em] text-teal-500/70 uppercase mb-1">◈ Expertise</p>
         <h2 className="font-orb text-2xl md:text-3xl font-bold text-white mb-1">My Skills</h2>

@@ -51,7 +51,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 relative">
+    <section id="contact" className="py-5 relative">
       <div className="reveal text-center mb-12">
         <p className="font-orb text-[10px] tracking-[0.3em] text-teal-500/70 uppercase mb-1">◈ Connect</p>
         <h2 className="font-orb text-3xl md:text-4xl font-black text-white mb-2">Initiate Comms</h2>
@@ -66,12 +66,12 @@ export default function Contact() {
           className="relative reveal glass-card teal-border rounded-3xl p-1 lg:p-2 shadow-2xl transition-colors duration-300"
         >
           {/* Inner container to hold the unified layout */}
-          <div 
+          <div
             className="flex flex-col lg:flex-row gap-8 lg:gap-16 p-8 lg:p-12 bg-slate-950/30 rounded-[1.25rem] overflow-hidden"
             style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }}
           >
             {/* Left: Info Blocks */}
-            <div 
+            <div
               className="flex-1 flex flex-col justify-center gap-8 relative z-10"
               style={{ transform: "translateZ(60px)" }}
             >
@@ -92,8 +92,8 @@ export default function Contact() {
             </div>
 
             {/* Right: Form */}
-            <form 
-              onSubmit={onSubmit} 
+            <form
+              onSubmit={onSubmit}
               className="flex-[1.3] flex flex-col gap-8 relative z-10"
               style={{ transform: "translateZ(70px)" }}
             >
@@ -104,16 +104,16 @@ export default function Contact() {
                   { id: "email", lbl: "Email", type: "email", col: "sm:col-span-2" },
                 ].map(({ id, lbl, type, col }) => (
                   <div key={id} className={`relative group ${col}`}>
-                    <input 
-                      id={id} 
-                      required 
-                      type={type} 
+                    <input
+                      id={id}
+                      required
+                      type={type}
                       placeholder=" "
                       className="peer w-full bg-transparent border-b border-white/20 px-0 py-2.5 text-sm text-white font-space 
-                                 focus:outline-none focus:border-teal-400 transition-all" 
+                                 focus:outline-none focus:border-teal-400 transition-all"
                     />
-                    <label 
-                      htmlFor={id} 
+                    <label
+                      htmlFor={id}
                       className="absolute left-0 -top-4 text-teal-400 font-orb text-[9px] uppercase tracking-[0.1em] transition-all duration-300
                                  peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-slate-400 peer-placeholder-shown:text-[11px]
                                  peer-focus:-top-4 peer-focus:text-teal-400 peer-focus:text-[9px] pointer-events-none"
@@ -122,18 +122,18 @@ export default function Contact() {
                     </label>
                   </div>
                 ))}
-                
+
                 <div className="relative group sm:col-span-2 mt-2">
-                  <textarea 
-                    id="msg" 
-                    required 
+                  <textarea
+                    id="msg"
+                    required
                     rows={3}
                     placeholder=" "
                     className="peer w-full bg-transparent border-b border-white/20 px-0 py-2.5 text-sm text-white font-space resize-none
-                               focus:outline-none focus:border-teal-400 transition-all" 
+                               focus:outline-none focus:border-teal-400 transition-all"
                   />
-                  <label 
-                    htmlFor="msg" 
+                  <label
+                    htmlFor="msg"
                     className="absolute left-0 -top-4 text-teal-400 font-orb text-[9px] uppercase tracking-[0.1em] transition-all duration-300
                                peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-slate-400 peer-placeholder-shown:text-[11px]
                                peer-focus:-top-4 peer-focus:text-teal-400 peer-focus:text-[9px] pointer-events-none"
@@ -143,14 +143,14 @@ export default function Contact() {
                 </div>
               </div>
 
-              <button 
+              <button
                 type="submit"
                 className="mt-2 flex items-center justify-center gap-3 py-3.5 rounded-lg bg-teal-gradient text-slate-950
                            text-xs font-black font-orb tracking-widest uppercase shadow-[0_0_20px_rgba(34,211,238,0.3)]
                            hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                 style={{ transform: "translateZ(30px)" }}
               >
-                {sent ? "✓ Transmitted" : <><FiSend className="text-sm"/> Send Transmission</>}
+                {sent ? "✓ Transmitted" : <><FiSend className="text-sm" /> Send Transmission</>}
               </button>
             </form>
           </div>

@@ -21,24 +21,24 @@ import ImgCarRental from "../Assets/carrental.png";
 import ImgGrievance from "../Assets/grievance.png";
 
 const PROJECTS = [
-  { category: "Web App",    name: "Lativex Solutions", desc: "Digital agency & technology consulting platform", link: "https://lativex-solutions.vercel.app/",  img: ImgLativex },
-  { category: "E-commerce", name: "Lucky Star Agencies",desc: "Wholesale e-commerce platform for fireworks",    link: "https://www.luckystaragencies.com",      img: ImgLuckyStar },
-  { category: "Web App",    name: "Smart Inventory AI",desc: "Cloud-based Inventory and Godown Management",     link: "https://github.com/lativexsolutions/Smart-Inventory-AI", img: ImgInventory },
-  { category: "Portfolio",  name: "Winner Weaving",    desc: "Premium corporate portfolio for industrial nets", link: "https://winnerweavingmills.com/",        img: ImgWinner },
-  { category: "Web App",    name: "CK Fine Arts Billing",desc: "Modern billing and invoice management platform",link: "https://ck-fine-arts-billing-system.vercel.app/", img: ImgCKBilling },
-  { category: "Web App",    name: "Fiesta 2k26",       desc: "College event frontend portal",                   link: "https://fiesta-2k26-frontend.vercel.app",  img: ImgFiesta },
-  { category: "Web App",    name: "Turf-2-Gether",     desc: "Turf booking with real-world payment integration",link: "https://turf-2-gether-frontend.vercel.app",img: ImgTurf },
-  { category: "Tasks",      name: "WFH Support Tool",  desc: "Supporting tool for remote work management",      link: "https://github.com/sandosh-prabu-2005/work-from-home-supporting-tool", img: ImgWfh },
-  { category: "Web App",    name: "Car Rental System", desc: "Comprehensive car rental and booking system",     link: "https://github.com/sandosh-prabu-2005/Car-Rental-Management--System", img: ImgCarRental },
-  { category: "Web App",    name: "Grievance Redressal",desc: "System for handling and tracking grievances",    link: "https://github.com/sandosh-prabu-2005/Grievance-Redressal-System", img: ImgGrievance },
-  { category: "E-commerce", name: "Mobile Cart",       desc: "Fashion e-commerce dark-theme template",          link: "https://mob-cart.vercel.app/",             img: Add2Cart      },
-  { category: "Portfolio",  name: "Sandy's Portfolio", desc: "Personal portfolio — React.js",                   link: "https://sandy-portfolio-beta.vercel.app/", img: PersonalImage },
-  { category: "Web App",    name: "Alumni Portal",     desc: "A comprehensive platform connecting alumni",        link: "https://github.com/sandosh-prabu-2005/Alumni-Portal", img: BostamiImage },
-  { category: "Web App",    name: "Canteen System",    desc: "Digital canteen management system",               link: "https://canteen-management-system-omega.vercel.app", img: GuesstheLogo },
-  { category: "Mobile App", name: "Disaster Mobile",   desc: "Mobile app for disaster prediction",              link: "https://github.com/sandosh-prabu-2005/Disaster-Mobile", img: PersonalImage },
-  { category: "Portfolio",  name: "Bostami",           desc: "HTML & CSS portfolio template",                   link: "https://portfolio-sandy2005.vercel.app/",  img: BostamiImage  },
-  { category: "Tasks",      name: "Guess the Logo",    desc: "Interactive logo-guessing game in JS",            link: "https://guess-the-logo-rouge.vercel.app/", img: GuesstheLogo  },
-  { category: "Tasks",      name: "Hang Man",          desc: "Classic Hangman word-game in JS",                 link: "https://hang-man-iota.vercel.app/",        img: hangman       },
+  { category: "Web App", name: "Lativex Solutions", desc: "Digital agency & technology consulting platform", link: "https://lativex-solutions.vercel.app/", img: ImgLativex },
+  { category: "E-commerce", name: "Lucky Star Agencies", desc: "Wholesale e-commerce platform for fireworks", link: "https://www.luckystaragencies.com", img: ImgLuckyStar },
+  { category: "Web App", name: "Smart Inventory AI", desc: "Cloud-based Inventory and Godown Management", link: "https://github.com/lativexsolutions/Smart-Inventory-AI", img: ImgInventory },
+  { category: "Portfolio", name: "Winner Weaving", desc: "Premium corporate portfolio for industrial nets", link: "https://winnerweavingmills.com/", img: ImgWinner },
+  { category: "Web App", name: "CK Fine Arts Billing", desc: "Modern billing and invoice management platform", link: "https://ck-fine-arts-billing-system.vercel.app/", img: ImgCKBilling },
+  { category: "Web App", name: "Fiesta 2k26", desc: "College event frontend portal", link: "https://fiesta-2k26-frontend.vercel.app", img: ImgFiesta },
+  { category: "Web App", name: "Turf-2-Gether", desc: "Turf booking with real-world payment integration", link: "https://turf-2-gether-frontend.vercel.app", img: ImgTurf },
+  { category: "Tasks", name: "WFH Support Tool", desc: "Supporting tool for remote work management", link: "https://github.com/sandosh-prabu-2005/work-from-home-supporting-tool", img: ImgWfh },
+  { category: "Web App", name: "Car Rental System", desc: "Comprehensive car rental and booking system", link: "https://github.com/sandosh-prabu-2005/Car-Rental-Management--System", img: ImgCarRental },
+  { category: "Web App", name: "Grievance Redressal", desc: "System for handling and tracking grievances", link: "https://github.com/sandosh-prabu-2005/Grievance-Redressal-System", img: ImgGrievance },
+  { category: "E-commerce", name: "Mobile Cart", desc: "Fashion e-commerce dark-theme template", link: "https://mob-cart.vercel.app/", img: Add2Cart },
+  { category: "Portfolio", name: "Sandy's Portfolio", desc: "Personal portfolio — React.js", link: "https://sandy-portfolio-beta.vercel.app/", img: PersonalImage },
+  { category: "Web App", name: "Alumni Portal", desc: "A comprehensive platform connecting alumni", link: "https://github.com/sandosh-prabu-2005/Alumni-Portal", img: BostamiImage },
+  { category: "Web App", name: "Canteen System", desc: "Digital canteen management system", link: "https://canteen-management-system-omega.vercel.app", img: GuesstheLogo },
+  { category: "Mobile App", name: "Disaster Mobile", desc: "Mobile app for disaster prediction", link: "https://github.com/sandosh-prabu-2005/Disaster-Mobile", img: PersonalImage },
+  { category: "Portfolio", name: "Bostami", desc: "HTML & CSS portfolio template", link: "https://portfolio-sandy2005.vercel.app/", img: BostamiImage },
+  { category: "Tasks", name: "Guess the Logo", desc: "Interactive logo-guessing game in JS", link: "https://guess-the-logo-rouge.vercel.app/", img: GuesstheLogo },
+  { category: "Tasks", name: "Hang Man", desc: "Classic Hangman word-game in JS", link: "https://hang-man-iota.vercel.app/", img: hangman },
 ];
 const CATS = ["All", "Web App", "Mobile App", "Portfolio", "E-commerce", "Tasks"];
 
@@ -127,7 +127,7 @@ export default function Projects() {
   const items = sel === "All" ? PROJECTS : PROJECTS.filter(p => p.category === sel);
 
   return (
-    <section id="projects" className="py-20 relative">
+    <section id="projects" className="py-5 relative">
       <div className="max-w-6xl mx-auto px-4 lg:px-8">
 
         {/* Header aligned left, utilizing space properly */}
