@@ -1,58 +1,98 @@
+"use client";
+
 import React from "react";
-import "./TestimonialsPage.css";
-import jk from "../Assets/jk.jfif";
+import { RiDoubleQuotesL } from "react-icons/ri";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+
+import jk  from "../Assets/jk.jpg";
 import jk2 from "../Assets/jk2.jpg";
 import jk3 from "../Assets/jk3.jpg";
 
-const testimonials = [
-    {
-        name: "JeyaKrishnan ",
-        role: "CEO, TechCorp",
-        feedback:
-            "Working with you was an absolute pleasure! Your attention to detail and commitment to excellence are remarkable.",
-        image: jk,
-
-    },
-    {
-        name: "Thalapathy Vijay",
-        role: "Senior Developer, TVK",
-        feedback:
-            "Your expertise and problem-solving skills have significantly improved our team's efficiency. Thank you for your hard work!",
-        image: jk2,
-    },
-    {
-        name: "MS Dhoni",
-        role: "Project Manager, CSK",
-        feedback:
-            "You bring creativity and innovation to every project. I truly appreciate your collaborative approach and dedication.",
-        image: jk3,
-    },
+const REVIEWS = [
+  { name: "JeyaKrishnan",   role: "CEO, TechCorp",      feedback: "Working with you was an absolute pleasure! Your attention to detail and commitment to excellence are remarkable.",         img: jk  },
+  { name: "Thalapathy Vijay", role: "Senior Dev, TVK",  feedback: "Your expertise and problem-solving skills have significantly improved our team's efficiency. Thank you for your hard work!", img: jk2 },
+  { name: "MS Dhoni",       role: "Project Mgr, CSK",   feedback: "You bring creativity and innovation to every project. I truly appreciate your collaborative approach and dedication.",     img: jk3 },
 ];
 
-const TestimonialsPage = () => {
-    return (
-        <section id="test" className="test-section">
-            <div className="testimonials-page">
-                <h1 className="testimonials-title">What Our Clients Say</h1>
-                <div className="testimonials-container">
-                    {testimonials.map((testimonial, index) => (
-                        <div className="testimonial-card" key={index}>
-                            <img
-                                src={testimonial.image}
-                                alt={`${testimonial.name}'s profile`}
-                                className="testimonial-image"
-                            />
-                            <div className="testimonial-content">
-                                <h3 className="testimonial-name">{testimonial.name}</h3>
-                                <p className="testimonial-role">{testimonial.role}</p>
-                                <p className="testimonial-feedback">"{testimonial.feedback}"</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
+function Testimonial3DCard({ r }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-export default TestimonialsPage;
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <div style={{ perspective: "1200px" }} className="w-full h-full">
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="group relative w-full h-full glass-card teal-border p-6 md:p-8 flex flex-col items-center text-center shadow-xl transition-colors duration-300 rounded-3xl"
+      >
+        <RiDoubleQuotesL 
+          className="text-teal-500/30 text-4xl mb-4 transition-transform duration-300 group-hover:text-teal-400" 
+          style={{ transform: "translateZ(30px)" }}
+        />
+        
+        <div 
+          className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-teal-500/30 mb-4 shadow-lg transition-all duration-500 group-hover:ring-teal-400 group-hover:shadow-teal-500/20"
+          style={{ transform: "translateZ(60px)" }}
+        >
+          <img src={r.img.src ?? r.img} alt={r.name} className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-500" />
+        </div>
+        
+        <p 
+          className="text-slate-300 text-[13px] leading-relaxed italic mb-5"
+          style={{ transform: "translateZ(40px)" }}
+        >
+          "{r.feedback}"
+        </p>
+        
+        <div style={{ transform: "translateZ(50px)" }}>
+          <h4 className="font-orb text-sm font-bold text-white tracking-wide">{r.name}</h4>
+          <p className="font-space text-[10px] text-teal-400 mt-1 uppercase tracking-widest">{r.role}</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+export default function TestimonialsPage() {
+  return (
+    <section id="test" className="py-20 relative">
+      <div className="reveal text-center mb-12">
+        <p className="font-orb text-[10px] tracking-[0.3em] text-teal-500/70 uppercase mb-1">◈ Testimonials</p>
+        <h2 className="font-orb text-3xl md:text-4xl font-black text-white mb-2">Client Feedback</h2>
+        <p className="text-slate-300 text-xs font-medium">What they say about the experience.</p>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {REVIEWS.map((r, i) => (
+            <Testimonial3DCard key={i} r={r} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

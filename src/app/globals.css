@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand:     #14b8a6;
+    --color-brand-dim: #0d9488;
+    --color-cyan:      #22d3ee;
+  }
+
+  html { 
+    scroll-behavior: smooth; 
+    /* Scale up everything proportionally to mimic 140% zoom on desktop */
+    font-size: 22px; 
+  }
+
+  @media (max-width: 1024px) {
+    html { font-size: 18px; }
+  }
+
+  @media (max-width: 768px) {
+    html { font-size: 16px; }
+  }
+
+  ::-webkit-scrollbar       { width: 4px; }
+  ::-webkit-scrollbar-track { background: #020c1b; }
+  ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 2px; }
+
+  ::selection { background: rgba(34,211,238,0.3); color: #fff; }
+
+  /* Apply Space Grotesk globally */
+  body { font-family: var(--font-space), ui-sans-serif, system-ui; }
+
+  /* Orbitron for headings with drop shadow for WebGL readability */
+  h1, h2, h3, h4, h5, h6 { 
+    font-family: var(--font-orbitron), var(--font-space), ui-sans-serif; 
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+}
+
+@layer components {
+  /* Skill bar */
+  .skill-fill {
+    @apply absolute top-0 left-0 h-full rounded-full;
+    background: linear-gradient(90deg, #14b8a6, #22d3ee);
+    width: 0;
+    transition: width 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .skill:hover .skill-fill { width: var(--skill-level); }
+
+  /* Gradient text */
+  .text-teal-glow {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(90deg, #14b8a6, #22d3ee);
+  }
+
+  /* Enhanced Glassmorphic theme */
+  .glass-card {
+    @apply border border-white/[0.15] backdrop-blur-2xl rounded-2xl transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  }
+  .glass-card:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+    @apply border-white/[0.25];
+  }
+  
+  .glass-panel {
+    @apply border border-white/[0.1] backdrop-blur-xl rounded-2xl transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .teal-border { @apply border border-teal-500/20 hover:border-cyan-400/40; }
+
+  /* Slide-up reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    filter: blur(3px);
+    transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1),
+                transform 0.65s cubic-bezier(0.16,1,0.3,1),
+                filter 0.65s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+
+  /* Stagger children */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1),
+                transform 0.55s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:.05s; }
+  .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:.12s; }
+  .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:.19s; }
+  .reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:.26s; }
+  .reveal-stagger.visible > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay:.33s; }
+  .reveal-stagger.visible > *:nth-child(6) { opacity:1; transform:translateY(0); transition-delay:.40s; }
+  .reveal-stagger.visible > *:nth-child(7) { opacity:1; transform:translateY(0); transition-delay:.47s; }
+  .reveal-stagger.visible > *:nth-child(8) { opacity:1; transform:translateY(0); transition-delay:.54s; }
+  .reveal-stagger.visible > *:nth-child(9) { opacity:1; transform:translateY(0); transition-delay:.61s; }
+  .reveal-stagger.visible > *:nth-child(10){ opacity:1; transform:translateY(0); transition-delay:.68s; }
+
+  /* Orbitron heading utility */
+  .font-orb { font-family: var(--font-orbitron), ui-sans-serif; }
+}
