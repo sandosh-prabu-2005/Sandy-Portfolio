@@ -81,7 +81,7 @@ export default function Home() {
           </p>
 
           <div className="reveal flex flex-wrap items-center gap-4 justify-center md:justify-start">
-            <a href="/path-to-your-cv.pdf" download
+            <a href="/Sandosh_Prabu_Infosys%20(2Page).pdf" download="Sandosh_Prabu_Resume.pdf"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-cyan-400
                           text-slate-950 text-xs font-black tracking-widest shadow-[0_0_20px_rgba(34,211,238,0.3)]
                           hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] hover:bg-cyan-300 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-orb uppercase">
@@ -100,7 +100,7 @@ export default function Home() {
 
           {/* Quick stats strip */}
           <div className="reveal mt-12 flex gap-8 justify-center md:justify-start">
-            {[["3+", "YEARS EXP."], ["15+", "PROJECTS"], ["10+", "TECH STACK"]].map(([num, lbl]) => (
+            {[["4+", "YEARS EXP."], ["15+", "PROJECTS"], ["10+", "TECH STACK"]].map(([num, lbl]) => (
               <div key={lbl} className="text-center">
                 <p className="font-orb text-2xl lg:text-3xl font-black text-cyan-400 tracking-wide">{num}</p>
                 <p className="font-space text-[9px] lg:text-[10px] text-slate-400 tracking-[0.2em] uppercase mt-1">{lbl}</p>

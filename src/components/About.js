@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FiCheckCircle, FiAward, FiBookOpen } from "react-icons/fi";
+import { FiCheckCircle, FiAward, FiBookOpen, FiExternalLink } from "react-icons/fi";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const HIGHLIGHTS = [
@@ -86,6 +86,14 @@ export default function About() {
               <p>
                 As the Founder & CEO of <strong className="text-cyan-300 font-medium tracking-wider">LATIVEX SOLUTIONS</strong>, I lead the company's vision, product innovation, strategic development, and technology direction. My expertise focuses on building intelligent business systems, scalable platforms, AI-driven products, and future-ready digital experiences.
               </p>
+            </div>
+
+            <div className="mt-8 relative z-20">
+              <a href="https://lativex-solutions.vercel.app" target="_blank" rel="noopener noreferrer"
+                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-black tracking-widest hover:bg-cyan-500/20 hover:border-cyan-400 hover:text-cyan-100 transition-all duration-300 shadow-[0_0_15px_rgba(34,211,238,0.1)] hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] hover:-translate-y-0.5 active:translate-y-0 font-orb uppercase">
+                VISIT LATIVEX SOLUTIONS
+                <FiExternalLink className="text-sm ml-1" />
+              </a>
             </div>
           </div>
 
