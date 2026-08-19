@@ -1,14 +1,42 @@
 "use client";
 
 import React from "react";
-import { FiDownload, FiInstagram, FiLinkedin, FiGithub, FiTwitter } from "react-icons/fi";
+import { FiDownload, FiInstagram, FiLinkedin, FiGithub } from "react-icons/fi";
+import { FaOrcid } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import profileImage from "../Assets/sandy.jpg";
 
 const socials = [
-  { label: "Instagram", href: "https://www.instagram.com/itz._.me._.sandy/?__pwa=1", icon: <FiInstagram />, ring: "hover:ring-cyan-500/50 hover:text-cyan-400" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/sandosh-prabu-ganesh-babhu-h14112008/", icon: <FiLinkedin />, ring: "hover:ring-cyan-500/50 hover:text-cyan-400" },
-  { label: "GitHub", href: "https://github.com/sandosh-prabu-2005", icon: <FiGithub />, ring: "hover:ring-cyan-500/50 hover:text-cyan-400" },
-  { label: "Twitter/X", href: "https://x.com/sandy_5_sandosh", icon: <FiTwitter />, ring: "hover:ring-cyan-500/50 hover:text-cyan-400" },
+  { 
+    label: "Instagram", 
+    href: "https://www.instagram.com/itz._.me._.sandy/?__pwa=1", 
+    icon: <FiInstagram />, 
+    ring: "hover:ring-[#e1306c] hover:border-[#e1306c] hover:text-[#e1306c] hover:shadow-[0_0_18px_rgba(225,48,108,0.45)]" 
+  },
+  { 
+    label: "LinkedIn", 
+    href: "https://www.linkedin.com/in/sandosh-prabu-ganesh-babhu-h14112008/", 
+    icon: <FiLinkedin />, 
+    ring: "hover:ring-[#0a66c2] hover:border-[#0a66c2] hover:text-[#0a66c2] hover:shadow-[0_0_18px_rgba(10,102,194,0.45)]" 
+  },
+  { 
+    label: "ORCID", 
+    href: "https://orcid.org/0009-0006-8271-0090", 
+    icon: <FaOrcid />, 
+    ring: "hover:ring-[#a6ce39] hover:border-[#a6ce39] hover:text-[#a6ce39] hover:shadow-[0_0_18px_rgba(166,206,57,0.45)]" 
+  },
+  { 
+    label: "GitHub", 
+    href: "https://github.com/sandosh-prabu-2005", 
+    icon: <FiGithub />, 
+    ring: "hover:ring-white hover:border-white hover:text-white hover:shadow-[0_0_18px_rgba(255,255,255,0.4)]" 
+  },
+  { 
+    label: "X", 
+    href: "https://x.com/sandy_5_sandosh", 
+    icon: <FaXTwitter />, 
+    ring: "hover:ring-white hover:border-white hover:text-white hover:shadow-[0_0_18px_rgba(255,255,255,0.45)]" 
+  },
 ];
 
 import { motion } from "framer-motion";
